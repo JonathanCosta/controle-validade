@@ -2,7 +2,7 @@
  * Inicialização da aplicação: serviços, shell, roteamento por hash e telas.
  */
 
-import './pwa-placeholder.ts';
+import { initPwa } from './pwa.ts';
 
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -90,6 +90,8 @@ async function bootstrap(root: HTMLElement): Promise<void> {
 
   window.addEventListener('hashchange', applyRoute);
   root.appendChild(shell.root);
+
+  initPwa();
 
   // Rota inicial: sem hash, substitui por #/inicio; o hashchange dispara
   // applyRoute. Com hash, aplica diretamente (evita dupla renderização).
