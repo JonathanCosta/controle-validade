@@ -62,6 +62,20 @@ describe('createProduct', () => {
     expect(() => createProduct({ name: 'Arroz', expiresAt: '2026-11-15', ean: '123' })).toThrow(ProductValidationError);
     expect(() => createProduct({ name: 'Arroz', expiresAt: '2026-11-15', ean: '7890000000001' })).toThrow(ProductValidationError);
   });
+
+  it('rejeita nome e marca acima do limite de comprimento', () => {
+    expect(() =>
+      createProduct({ name: 'A'.repeat(201), expiresAt: '2026-11-15' }),
+    ).toThrow(ProductValidationError);
+    expect(() =>
+      createProduct({ name: 'Arroz', expiresAt: '2026-11-15', brand: 'M'.repeat(101) }),
+    ).toThrow(ProductValidationError);
+    // Nos limites exatos é aceito.
+    expect(createProduct({ name: 'A'.repeat(200), expiresAt: '2026-11-15' }).name.length).toBe(200);
+    expect(
+      createProduct({ name: 'Arroz', expiresAt: '2026-11-15', brand: 'M'.repeat(100) }).brand?.length,
+    ).toBe(100);
+  });
 });
 
 describe('produtos repetidos', () => {

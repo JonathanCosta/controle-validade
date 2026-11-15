@@ -28,6 +28,14 @@ export interface ProductInput {
   brand?: string | null;
 }
 
+/**
+ * Limites de comprimento: nomes de produto reais ficam muito abaixo disso;
+ * protegem o armazenamento de respostas gigantes de fonte externa e de
+ * backups hostis (defesa em profundidade decidida na auditoria da Etapa 4).
+ */
+export const MAX_NAME_LENGTH = 200;
+export const MAX_BRAND_LENGTH = 100;
+
 /** Cria e valida um produto; `id` é gerado automaticamente quando ausente. */
 export function createProduct(input: ProductInput, id?: string): Product {
   if (typeof input.name !== 'string') {
@@ -36,6 +44,9 @@ export function createProduct(input: ProductInput, id?: string): Product {
   const name = input.name.trim();
   if (name === '') {
     throw new ProductValidationError('name', 'Informe o nome do produto.');
+  }
+  if (name.length > MAX_NAME_LENGTH) {
+    throw new ProductValidationError('name', `Nome do produto muito longo (máximo ${MAX_NAME_LENGTH} caracteres).`);
   }
 
   if (typeof input.expiresAt !== 'string' || !isValidDateOnly(input.expiresAt)) {
@@ -55,7 +66,11 @@ export function createProduct(input: ProductInput, id?: string): Product {
     if (typeof input.brand !== 'string') {
       throw new ProductValidationError('brand', 'Marca inválida.');
     }
-    brand = input.brand.trim() || null;
+    const trimmedBrand = input.brand.trim();
+    if (trimmedBrand.length > MAX_BRAND_LENGTH) {
+      throw new ProductValidationError('brand', `Marca muito longa (máximo ${MAX_BRAND_LENGTH} caracteres).`);
+    }
+    brand = trimmedBrand || null;
   }
 
   const productId = id ?? crypto.randomUUID();
