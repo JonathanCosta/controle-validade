@@ -190,15 +190,13 @@ export function renderProductForm(content: HTMLElement): void {
     // Registros locais com o mesmo EAN sugerem o nome já cadastrado —
     // funciona offline e evita consulta desnecessária.
     if (nameField.input.value.trim() === '') {
-      if (nameField.input.value.trim() === '') {
-        const localMatches = await context.productsService.getProductsByEan(ean);
-        const known = localMatches[0];
-        if (known) {
-          nameField.input.value = known.name;
-          lookupStatus.textContent =
-            'Produto já cadastrado antes: nome preenchido a partir dos seus registros.';
-          return;
-        }
+      const localMatches = await context.productsService.getProductsByEan(ean);
+      const known = localMatches[0];
+      if (known) {
+        nameField.input.value = known.name;
+        lookupStatus.textContent =
+          'Produto já cadastrado antes: nome preenchido a partir dos seus registros.';
+        return;
       }
     }
 
