@@ -675,3 +675,78 @@
 .modal__actions .button {
   flex: 1;
 }
+
+/* Relatórios (DESIGN_SYSTEM §8.5) */
+.report-filters {
+  margin-bottom: var(--space-6);
+}
+
+.report-filters__actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.report-filters__actions .button {
+  flex: 1;
+}
+
+.report-meta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-sm);
+  margin-bottom: var(--space-4);
+}
+
+.report-section {
+  margin-bottom: var(--space-5);
+}
+
+.report-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-md);
+  margin-bottom: var(--space-2);
+}
+
+.report-section__count {
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.report-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.report-list__item {
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.report-list__item:last-child {
+  border-bottom: 0;
+}
+
+.report-total {
+  font-weight: 600;
+  margin-top: var(--space-4);
+}
+
+.report-copy {
+  margin-top: var(--space-6);
+}
+
+.report-copy__fallback {
+  margin-top: var(--space-3);
+}
+
+.report-copy__textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-sm);
+}
