@@ -25,8 +25,10 @@ export interface AppShell {
   setRoute(route: RouteId): void;
 }
 
+export type ScreenRenderer = (route: RouteId, content: HTMLElement) => void | Promise<void>;
+
 /** Constrói o shell uma única vez; `setRoute` atualiza conteúdo e nav. */
-export function createAppShell(renderScreen: (route: RouteId, content: HTMLElement) => void): AppShell {
+export function createAppShell(renderScreen: ScreenRenderer): AppShell {
   const root = document.createElement('div');
   root.className = 'app-shell';
 
@@ -66,9 +68,12 @@ export function createAppShell(renderScreen: (route: RouteId, content: HTMLEleme
   root.appendChild(content);
   root.appendChild(nav);
 
+  let renderToken = 0;
+
   function setRoute(route: RouteId): void {
+    renderToken += 1;
+    const token = renderToken;
     content.replaceChildren();
-    renderScreen(route, content);
     const focused = route === 'novo';
     root.classList.toggle('no-nav', focused);
     for (const link of nav.querySelectorAll<HTMLAnchorElement>('.bottom-nav__link')) {
@@ -80,6 +85,27 @@ export function createAppShell(renderScreen: (route: RouteId, content: HTMLEleme
         link.removeAttribute('aria-current');
       }
     }
+
+    void Promise.resolve(renderScreen(route, content)).catch((error) => {
+      if (token !== renderToken) {
+        return;
+      }
+      console.error('Falha ao renderizar a tela.', error);
+      content.replaceChildren();
+      const box = document.createElement('div');
+      box.className = 'screen-stub';
+      const msg = document.createElement('p');
+      msg.textContent = 'Não foi possível carregar esta tela. Tente novamente.';
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.className = 'button button--secondary';
+      retry.textContent = 'Tentar novamente';
+      retry.addEventListener('click', () => {
+        setRoute(route);
+      });
+      box.append(msg, retry);
+      content.appendChild(box);
+    });
   }
 
   return { root, content, setRoute };

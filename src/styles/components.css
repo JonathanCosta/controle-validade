@@ -45,3 +45,85 @@
   width: 100%;
   margin-top: var(--space-2);
 }
+
+.button--destructive {
+  background: var(--status-expired-bg);
+  color: var(--status-expired-text);
+  border: 1px solid var(--status-expired-border);
+}
+
+.button--destructive:hover:not(:disabled) {
+  background: #f8d7d4;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    transform var(--motion-base) ease-out,
+    background-color var(--motion-fast) ease-out,
+    color var(--motion-fast) ease-out;
+}
+
+.icon-button:hover {
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+}
+
+.icon-button:active {
+  transform: scale(0.97);
+}
+
+.icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-button--danger:hover {
+  background: var(--status-expired-bg);
+  color: var(--status-expired-text);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  font-size: var(--font-xs);
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.status-badge--expired {
+  background: var(--status-expired-bg);
+  color: var(--status-expired-text);
+  border: 1px solid var(--status-expired-border);
+}
+
+.status-badge--today {
+  background: var(--status-today-bg);
+  color: var(--status-today-text);
+  border: 1px solid var(--status-today-border);
+}
+
+.status-badge--upcoming {
+  background: var(--status-upcoming-bg);
+  color: var(--status-upcoming-text);
+  border: 1px solid var(--status-upcoming-border);
+}
+
+.status-badge--valid {
+  background: var(--status-valid-bg);
+  color: var(--status-valid-text);
+  border: 1px solid var(--status-valid-border);
+}
