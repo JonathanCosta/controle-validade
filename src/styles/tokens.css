@@ -1,0 +1,79 @@
+/* Tokens do design system — fonte única de verdade visual.
+   Valores definidos em DESIGN_SYSTEM.md §13. Não alterar localmente. */
+:root {
+  color-scheme: light;
+
+  --color-app-bg: #F7F7F6;
+  --color-surface: #FFFFFF;
+  --color-surface-soft: #FCFCFA;
+  --color-surface-muted: #F1F2F1;
+  --color-accent: #2D2D2D;
+  --color-accent-hover: #202020;
+  --color-text-main: #1F2937;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #6B7280;
+  --color-border: #E7E8E6;
+  --color-border-strong: #D5D7D4;
+  --color-focus: #454545;
+  --color-overlay: rgba(18, 18, 17, 0.36);
+
+  --status-expired-bg: #FCE8E6;
+  --status-expired-text: #9B1C1C;
+  --status-expired-border: #F3C7C2;
+  --status-today-bg: #FFF1E6;
+  --status-today-text: #9A3412;
+  --status-today-border: #F7D2BC;
+  --status-upcoming-bg: #FFF7D6;
+  --status-upcoming-text: #7A4B00;
+  --status-upcoming-border: #EEDFA8;
+  --status-valid-bg: #E7F4EC;
+  --status-valid-text: #17603A;
+  --status-valid-border: #C9E6D4;
+
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --shadow-soft-lg: 0 10px 40px rgba(0, 0, 0, 0.06);
+  --shadow-nav: 0 -2px 16px rgba(0, 0, 0, 0.06);
+  --shadow-fab: 0 5px 16px rgba(0, 0, 0, 0.16);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --font-xs: 11px;
+  --font-sm: 13px;
+  --font-base: 15px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 22px;
+  --font-2xl: 28px;
+
+  --motion-fast: 140ms;
+  --motion-base: 200ms;
+  --motion-page: 220ms;
+  --motion-sheet: 260ms;
+  --motion-dialog: 180ms;
+  --motion-list: 180ms;
+
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: var(--font-base);
+  color: var(--color-text-main);
+  background: var(--color-app-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
