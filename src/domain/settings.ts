@@ -17,7 +17,7 @@ export interface AppSettings {
 export const DEFAULT_SETTINGS: AppSettings = {
   nearExpiryDays: 15,
   lookupUrlTemplate:
-    'https://sl-bff-report.americanas.io/web/price-scanner/store/L267/ean/{ean}',
+    'https://controle-validade-americanas-worker.jonathan-martins.workers.dev/api/americanas/{ean}',
   groupingMode: 'date',
 };
 

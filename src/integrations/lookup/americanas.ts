@@ -1,5 +1,6 @@
 /**
- * Provider Americanas (ESPECIFICACAO §7.2-§7.7).
+ * Provider de consulta por EAN via endpoint configurável (proxy/Worker compatível).
+ * URL padrão: Cloudflare Worker que consulta a fonte de identificação e evita CORS.
  * GET na URL configurada com {ean}; credentials: 'omit'; Accept: application/json;
  * timeout de 8s com AbortController; sem retries; sem cache.
  *

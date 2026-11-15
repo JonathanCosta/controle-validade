@@ -9,7 +9,7 @@ import {
   type LookupFailureKind,
 } from '../../../src/integrations/lookup/product-lookup.ts';
 
-const TEMPLATE = 'https://sl-bff-report.americanas.io/web/price-scanner/store/L267/ean/{ean}';
+const TEMPLATE = 'https://controle-validade-americanas-worker.jonathan-martins.workers.dev/api/americanas/{ean}';
 const EAN = '7898524349322';
 
 function jsonResponse(status: number, body: unknown): Response {

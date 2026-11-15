@@ -91,7 +91,7 @@ function mountSettings(content: HTMLElement, initial: AppSettings): void {
   urlField.input.value = settings.lookupUrlTemplate;
   const urlHint = document.createElement('p');
   urlHint.className = 'field__hint';
-  urlHint.textContent = 'Use {ean} no lugar do código. O formato de resposta esperado é compatível com o provider atual (Americanas). O cadastro manual funciona sem esta consulta.';
+  urlHint.textContent = 'Use {ean} no lugar do código. O endpoint deve responder JSON com ean e description (padrão: proxy/Worker configurado). O cadastro manual funciona sem esta consulta.';
   const urlError = document.createElement('p');
   urlError.className = 'field__error';
   const saveUrl = createButton('Salvar URL', 'secondary');

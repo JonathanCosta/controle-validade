@@ -15,7 +15,7 @@ describe('DEFAULT_SETTINGS', () => {
 });
 
 describe('validateLookupUrlTemplate', () => {
-  const VALID = 'https://sl-bff-report.americanas.io/web/price-scanner/store/L267/ean/{ean}';
+  const VALID = 'https://controle-validade-americanas-worker.jonathan-martins.workers.dev/api/americanas/{ean}';
 
   it('aceita URL padrão e URLs https com um marcador', () => {
     expect(validateLookupUrlTemplate(VALID).ok).toBe(true);

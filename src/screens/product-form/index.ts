@@ -91,6 +91,7 @@ export function renderProductForm(content: HTMLElement): void {
 
   let saving = false;
   let scanning = false;
+  let lookupInFlightFor: string | null = null;
 
   submit.addEventListener('click', () => {
     void handleSubmit();
@@ -205,6 +206,12 @@ export function renderProductForm(content: HTMLElement): void {
       lookupStatus.textContent = LOOKUP_FAILURE_MESSAGES['network-error'];
       return;
     }
+
+    // Uma leitura deve gerar apenas uma consulta por EAN; evita requisições duplicadas.
+    if (lookupInFlightFor === ean) {
+      return;
+    }
+    lookupInFlightFor = ean;
     lookupStatus.textContent = 'Consultando a fonte de produtos…';
 
     let outcome: LookupOutcome;
@@ -215,6 +222,8 @@ export function renderProductForm(content: HTMLElement): void {
       outcome = await provider.lookupWithStatus(ean);
     } catch {
       outcome = NETWORK_FAILURE;
+    } finally {
+      lookupInFlightFor = null;
     }
 
     if (outcome.status === 'found') {
