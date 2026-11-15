@@ -1,0 +1,25 @@
+# Dependências
+node_modules/
+
+# Build
+dist/
+dev-dist/
+*.local
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+*.swp

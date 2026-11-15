@@ -1,0 +1,400 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "opencode/glm-5.3-flash-free",
+  "default_agent": "build",
+  "instructions": [
+    "ESPECIFICACAO_COMPLETA.md"
+  ],
+  "compaction": {
+    "auto": true,
+    "keep": {
+      "tokens": 12000
+    },
+    "buffer": "15%"
+  },
+  "snapshots": true,
+  "watcher": {
+    "ignore": [
+      "node_modules/**",
+      "dist/**",
+      "coverage/**",
+      ".git/**",
+      ".vite/**"
+    ]
+  },
+  "permissions": [
+    {
+      "action": "skill",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "read",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "glob",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "grep",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "edit",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "external_directory",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "read",
+      "resource": "**/.env",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/.env.local",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/.env.production",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/secrets/**",
+      "effect": "deny"
+    },
+    {
+      "action": "read",
+      "resource": "**/.env.example",
+      "effect": "allow"
+    },
+    {
+      "action": "edit",
+      "resource": "**/.env",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/.env.local",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/.env.production",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/*.pem",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/*.key",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/secrets/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "**/.env.example",
+      "effect": "allow"
+    },
+    {
+      "action": "edit",
+      "resource": "node_modules/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": "dist/**",
+      "effect": "deny"
+    },
+    {
+      "action": "edit",
+      "resource": ".git/**",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "shell",
+      "resource": "git status *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git diff *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git log *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git branch *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git show *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run typecheck *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run test *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm test *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "npm run build *",
+      "effect": "allow"
+    },
+    {
+      "action": "shell",
+      "resource": "git push *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "git reset *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "git clean *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "rm *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "sudo *",
+      "effect": "deny"
+    },
+    {
+      "action": "shell",
+      "resource": "npm publish *",
+      "effect": "deny"
+    },
+    {
+      "action": "subagent",
+      "resource": "planner",
+      "effect": "allow"
+    },
+    {
+      "action": "subagent",
+      "resource": "reviewer",
+      "effect": "allow"
+    },
+    {
+      "action": "subagent",
+      "resource": "qa",
+      "effect": "allow"
+    },
+    {
+      "action": "subagent",
+      "resource": "security-reviewer",
+      "effect": "allow"
+    }
+  ],
+  "agents": {
+    "planner": {
+      "description": "Analisa requisitos e arquitetura do Controle de Validade e produz planos incrementais sem modificar arquivos.",
+      "mode": "subagent",
+      "system": "Você é o agente de planejamento técnico do Controle de Validade. Leia integralmente ESPECIFICACAO_COMPLETA.md e AGENTS.md antes de planejar. Inspecione o repositório e o estado atual. Não edite arquivos, não execute comandos shell e não invente requisitos. Produza um plano incremental, com arquivos envolvidos, dependências, riscos, testes e critérios de aceite. Preserve o escopo: PWA pessoal local-first para validade; sem estoque, quantidade, movimentações, backend, login ou sincronização. Quando a especificação já decidir algo, não devolva a decisão ao usuário.",
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "shell",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "shell",
+          "resource": "git status *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "git diff *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "git log *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "git branch *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "git show *",
+          "effect": "allow"
+        },
+        {
+          "action": "subagent",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+    "reviewer": {
+      "description": "Revisa alterações de código procurando bugs, regressões, violações da especificação e testes ausentes.",
+      "mode": "subagent",
+      "system": "Você é um revisor de código independente. Leia ESPECIFICACAO_COMPLETA.md e AGENTS.md, examine o diff e os arquivos relevantes. Não modifique arquivos. Priorize defeitos concretos, regressões, problemas de dados, datas/fuso horário, acessibilidade, segurança e comportamento offline. Não faça sugestões cosméticas sem impacto. Apresente achados por severidade (crítica, alta, média, baixa), sempre com arquivo/trecho e cenário de reprodução. Se não encontrar problemas, declare o escopo efetivamente revisado e as limitações.",
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "subagent",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+    "qa": {
+      "description": "Executa verificações automatizadas e valida os critérios de aceite sem alterar o código.",
+      "mode": "subagent",
+      "system": "Você é o agente de QA do Controle de Validade. Leia ESPECIFICACAO_COMPLETA.md e AGENTS.md. Não edite arquivos nem corrija os problemas: apenas execute verificações existentes, examine os resultados e reporte. Use os scripts declarados no package.json; não invente comandos. Verifique typecheck, testes e build. Se algum script não existir, informe em vez de improvisar. Dê atenção especial a datas de calendário, EAN-8/EAN-13, duplicidade por UUID, importação/mesclagem de backup, filtros de relatório e uso offline. Não faça deploy, commit ou push.",
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "shell",
+          "resource": "npm run typecheck *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "npm run test *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "npm test *",
+          "effect": "allow"
+        },
+        {
+          "action": "shell",
+          "resource": "npm run build *",
+          "effect": "allow"
+        },
+        {
+          "action": "subagent",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    },
+    "security-reviewer": {
+      "description": "Audita segurança, privacidade, validação de entradas, IndexedDB, scanner e integrações externas.",
+      "mode": "subagent",
+      "system": "Você é um auditor de segurança de aplicações web/PWA. Leia ESPECIFICACAO_COMPLETA.md e AGENTS.md. Faça revisão somente leitura. Procure XSS/DOM injection, importação insegura de JSON, validação insuficiente de datas e EAN, uso inseguro de URL configurável, exposição de credenciais, permissões de câmera, tratamento de respostas externas, armazenamento local e cache de dados. Considere que não existe backend. Não recomende adicionar backend ou dependências pesadas sem demonstrar necessidade incontornável. Apresente somente riscos concretos, impacto, cenário e mitigação proporcional. Não modifique arquivos.",
+      "permissions": [
+        {
+          "action": "edit",
+          "resource": "*",
+          "effect": "deny"
+        },
+        {
+          "action": "subagent",
+          "resource": "*",
+          "effect": "deny"
+        }
+      ]
+    }
+  },
+  "commands": {
+    "bootstrap": {
+      "description": "Lê a especificação e inspeciona o repositório sem fazer alterações.",
+      "agent": "planner",
+      "subagent": true,
+      "template": "Prepare o contexto inicial do projeto. Leia integralmente ESPECIFICACAO_COMPLETA.md e AGENTS.md. Inspecione a estrutura do repositório, package.json, lockfile, scripts, configuração do Vite/TypeScript, testes, GitHub Actions e estado do Git. Não altere arquivos. Informe: (1) estado atual; (2) o que já está implementado; (3) lacunas em relação à especificação; (4) riscos ou conflitos com conteúdo existente; (5) próximo passo recomendado, pequeno e verificável. Não proponha reescrever o projeto se já existir implementação útil."
+    },
+    "plan": {
+      "description": "Cria um plano incremental para uma tarefa sem editar arquivos.",
+      "agent": "planner",
+      "subagent": true,
+      "template": "Planeje a seguinte tarefa: $ARGUMENTS\n\nLeia a especificação completa e as instruções do repositório. Inspecione o código relacionado. Não faça alterações. Entregue passos pequenos, arquivos envolvidos, impactos, riscos, testes e critérios de aceite. Respeite decisões já aprovadas; não faça perguntas sobre requisitos que já estejam documentados."
+    },
+    "implement": {
+      "description": "Implementa uma tarefa do projeto seguindo a especificação e executando as verificações.",
+      "agent": "build",
+      "subagent": false,
+      "template": "Implemente a seguinte tarefa no Controle de Validade: $ARGUMENTS\n\nAntes de editar, leia integralmente ESPECIFICACAO_COMPLETA.md e AGENTS.md e inspecione os arquivos relacionados. Faça a menor alteração coerente com a arquitetura existente. Não refatore áreas não relacionadas. Não adicione backend, login, sincronização, quantidade, estoque ou dependências grandes. Escreva/ajuste testes para o comportamento alterado. Ao terminar, execute typecheck, testes e build disponíveis. Corrija falhas causadas pela alteração. Não faça commit, push ou deploy. Informe arquivos alterados, decisões, verificações executadas e limitações."
+    },
+    "review": {
+      "description": "Revisa o diff e aponta defeitos sem modificar arquivos.",
+      "agent": "reviewer",
+      "subagent": true,
+      "template": "Revise as alterações atuais do projeto. Escopo adicional: $ARGUMENTS\n\nLeia a especificação e as instruções. Examine o diff e os arquivos relacionados. Não edite arquivos. Procure bugs, regressões, falhas de validação, problemas com datas/fuso horário, persistência IndexedDB, backup, scanner, PWA/offline, acessibilidade e violações de escopo. Liste somente achados concretos, por severidade, com arquivo e evidência. Se não houver achados, informe o que foi revisado e o que não foi possível verificar."
+    },
+    "validate": {
+      "description": "Executa as validações automatizadas disponíveis, sem alterar arquivos.",
+      "agent": "qa",
+      "subagent": true,
+      "template": "Valide o estado atual do projeto. Escopo adicional: $ARGUMENTS\n\nLeia a especificação e AGENTS.md. Consulte package.json e execute os scripts existentes para verificação de tipos, testes e build. Não altere código, não instale dependências e não faça deploy. Se faltar um script, apenas informe. Avalie os resultados e liste falhas com saída relevante, sem declarar sucesso para verificações que não foram executadas."
+    },
+    "security": {
+      "description": "Realiza auditoria de segurança e privacidade sem editar arquivos.",
+      "agent": "security-reviewer",
+      "subagent": true,
+      "template": "Faça uma revisão de segurança do projeto. Foco adicional: $ARGUMENTS\n\nLeia a especificação e as instruções. Examine entradas do usuário, renderização DOM, JSON de backup, EAN, URL de consulta, respostas HTTP, câmera, IndexedDB, cache PWA e exposição de dados. Não altere arquivos. Apresente riscos concretos, severidade, cenário de exploração e mitigação mínima. Não invente vulnerabilidades hipotéticas sem explicar as condições necessárias."
+    }
+  }
+}
