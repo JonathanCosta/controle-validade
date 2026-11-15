@@ -252,7 +252,16 @@ function mountSettings(content: HTMLElement, initial: AppSettings): void {
   const about = document.createElement('p');
   about.className = 'field__hint';
   about.textContent = 'Controle de Validade — versão 1.0.0. Seus dados ficam armazenados apenas neste dispositivo. Faça backups regularmente.';
-  aboutSection.appendChild(about);
+  const credit = document.createElement('p');
+  credit.className = 'field__hint';
+  credit.append('Desenvolvido por ');
+  const creditLink = document.createElement('a');
+  creditLink.href = 'https://github.com/JonathanCosta';
+  creditLink.textContent = '@JonathanCosta';
+  creditLink.target = '_blank';
+  creditLink.rel = 'noopener noreferrer';
+  credit.appendChild(creditLink);
+  aboutSection.append(about, credit);
 
   content.append(validitySection, lookupSection, groupingSection, backupSection, aboutSection);
 }
