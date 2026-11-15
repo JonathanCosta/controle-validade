@@ -750,3 +750,18 @@
   font: inherit;
   font-size: var(--font-sm);
 }
+
+.modal__actions--stack {
+  flex-direction: column;
+}
+
+.settings-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.settings-section .grouping-toggle {
+  margin-top: var(--space-2);
+}
