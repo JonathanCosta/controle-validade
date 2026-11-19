@@ -150,6 +150,13 @@ export function renderProductForm(content: HTMLElement): void {
     void startScan();
   });
 
+  eanField.input.addEventListener('blur', () => {
+    const ean = eanField.input.value.trim();
+    if (isValidEan(ean)) {
+      void handleDetectedEan(ean);
+    }
+  });
+
   async function startScan(): Promise<void> {
     if (scanning) {
       return;
