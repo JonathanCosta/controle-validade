@@ -10,7 +10,7 @@
 import { createPageHeader } from '../../components/page-header.ts';
 import { createFormField, type FormField } from '../../components/form-field.ts';
 import { showToast } from '../../components/toast.ts';
-import { createIcon } from '../../components/icons.ts';
+import { renderIcon } from '../../assets/icons/index.ts';
 import { ProductValidationError } from '../../domain/errors.ts';
 import { isValidEan } from '../../domain/ean.ts';
 import { getAppContext } from '../../app/context.ts';
@@ -62,7 +62,7 @@ export function renderProductForm(content: HTMLElement): void {
   const scanButton = document.createElement('button');
   scanButton.type = 'button';
   scanButton.className = 'button button--secondary product-form__scan';
-  scanButton.appendChild(createIcon('camera'));
+  scanButton.appendChild(renderIcon('scan-barcode', { size: 20 }));
   const scanLabel = document.createElement('span');
   scanLabel.textContent = 'Escanear código de barras';
   scanButton.appendChild(scanLabel);

@@ -3,19 +3,19 @@
  * Fluxos focados (#/novo) escondem a navegação inferior (DESIGN_SYSTEM.md §6.4).
  */
 
-import { createIcon } from './icons.ts';
+import { renderIcon, type IconName } from '../assets/icons/index.ts';
 import { navigate, routeToHash, type RouteId } from '../app/navigation.ts';
 
 export interface NavItem {
   route: RouteId;
   label: string;
-  icon: Parameters<typeof createIcon>[0];
+  icon: IconName;
 }
 
 const NAV_ITEMS: readonly NavItem[] = [
   { route: 'inicio', label: 'Início', icon: 'home' },
-  { route: 'produtos', label: 'Produtos', icon: 'list' },
-  { route: 'relatorios', label: 'Relatórios', icon: 'report' },
+  { route: 'produtos', label: 'Produtos', icon: 'products' },
+  { route: 'relatorios', label: 'Relatórios', icon: 'reports' },
   { route: 'configuracoes', label: 'Configurações', icon: 'settings' },
 ];
 
@@ -46,7 +46,7 @@ export function createAppShell(renderScreen: ScreenRenderer): AppShell {
   fab.type = 'button';
   fab.className = 'bottom-nav__fab';
   fab.setAttribute('aria-label', 'Adicionar produto');
-  fab.appendChild(createIcon('plus'));
+  fab.appendChild(renderIcon('plus'));
   fab.addEventListener('click', () => navigate('novo'));
 
   for (const item of items) {
@@ -58,7 +58,7 @@ export function createAppShell(renderScreen: ScreenRenderer): AppShell {
     link.className = 'bottom-nav__link';
     link.href = routeToHash(item.route);
     link.dataset.route = item.route;
-    link.appendChild(createIcon(item.icon));
+    link.appendChild(renderIcon(item.icon));
     const label = document.createElement('span');
     label.textContent = item.label;
     link.appendChild(label);

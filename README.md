@@ -24,6 +24,14 @@ A aplicação usa navegação por hash (`#/inicio`, `#/produtos`, `#/novo`, `#/r
 - `npm run test` — testes (Vitest)
 - `npm run typecheck` — checagem TypeScript
 
+## Identidade visual e ativos
+
+- Logotipos oficiais em `src/assets/brand/` (horizontal, vertical e símbolo).
+- Catálogo de ícones em `src/assets/icons/index.ts`, renderizado com `createElementNS` via `renderIcon()`; as fontes SVG individuais ficam no mesmo diretório.
+- Favicons em `public/` e ícones PWA em `public/icons/` (192, 512, maskable e Apple Touch).
+- Tokens em `src/styles/tokens.css`. A fonte Inter é auto-hospedada por `@fontsource-variable/inter` e carregada em `src/styles/fonts.css`, sem Google Fonts ou CDN.
+- O Manifest é gerado pelo `vite-plugin-pwa` em `vite.config.ts`; não há um segundo manifest concorrente.
+
 ## Build e caminho base (GitHub Pages)
 
 O caminho de publicação é configurável por `VITE_BASE_PATH`:

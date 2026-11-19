@@ -4,6 +4,7 @@
  */
 
 import { createPageHeader } from '../../components/page-header.ts';
+import { createBrandSymbol } from '../../components/brand.ts';
 import { createEmptyState } from '../../components/empty-state.ts';
 import { createStatusBadge } from '../../components/status-badge.ts';
 import { getAppContext } from '../../app/context.ts';
@@ -22,6 +23,7 @@ export async function renderDashboard(content: HTMLElement): Promise<void> {
     title: 'Validades',
     description: 'Acompanhe o que venceu e o que está próximo do vencimento.',
   });
+  header.prepend(createBrandSymbol({ className: 'page-header__brand' }));
   content.appendChild(header);
 
   const loading = document.createElement('div');

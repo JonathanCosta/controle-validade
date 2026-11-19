@@ -4,6 +4,7 @@
  */
 
 import { createPageHeader } from '../../components/page-header.ts';
+import { createBrandLogo } from '../../components/brand.ts';
 import { confirmModal } from '../../components/modal.ts';
 import { showToast } from '../../components/toast.ts';
 import { getAppContext } from '../../app/context.ts';
@@ -249,6 +250,12 @@ function mountSettings(content: HTMLElement, initial: AppSettings): void {
 
   // Sobre
   const aboutSection = createSection('Sobre');
+  aboutSection.appendChild(
+    createBrandLogo('vertical', {
+      className: 'brand-logo brand-logo--vertical',
+      label: 'Controle de Validade',
+    }),
+  );
   const about = document.createElement('p');
   about.className = 'field__hint';
   about.textContent = 'Controle de Validade — versão 1.0.0. Seus dados ficam armazenados apenas neste dispositivo. Faça backups regularmente.';

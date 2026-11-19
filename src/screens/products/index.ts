@@ -8,7 +8,7 @@ import { createEmptyState } from '../../components/empty-state.ts';
 import { createStatusBadge } from '../../components/status-badge.ts';
 import { confirmModal } from '../../components/modal.ts';
 import { showToast } from '../../components/toast.ts';
-import { createIcon } from '../../components/icons.ts';
+import { renderIcon } from '../../assets/icons/index.ts';
 import { getAppContext } from '../../app/context.ts';
 import { getLocalToday, formatDateBR } from '../../domain/date.ts';
 import {
@@ -124,7 +124,7 @@ function mountProductsScreen(
   // Busca
   const searchWrap = document.createElement('div');
   searchWrap.className = 'search-field';
-  const searchIcon = createIcon('search');
+  const searchIcon = renderIcon('search', { size: 20 });
   searchIcon.classList.add('search-field__icon');
   const searchInput = document.createElement('input');
   searchInput.type = 'search';
@@ -368,7 +368,7 @@ function renderProductItem(
   deleteButton.type = 'button';
   deleteButton.className = 'icon-button icon-button--danger';
   deleteButton.setAttribute('aria-label', `Excluir ${product.name}, validade ${formatDateBR(product.expiresAt)}`);
-  deleteButton.appendChild(createIcon('delete'));
+  deleteButton.appendChild(renderIcon('trash', { size: 20 }));
   deleteButton.addEventListener('click', () => {
     void onDelete(product);
   });

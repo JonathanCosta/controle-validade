@@ -2,7 +2,7 @@
  * Fábrica de cabeçalho de tela (DESIGN_SYSTEM.md §7.1).
  */
 
-import { createIcon, type IconName } from '../components/icons.ts';
+import { renderIcon } from '../assets/icons/index.ts';
 
 export interface PageHeaderOptions {
   title: string;
@@ -20,7 +20,7 @@ export function createPageHeader(options: PageHeaderOptions): HTMLElement {
     back.className = 'page-header__back';
     back.href = options.backTarget;
     back.setAttribute('aria-label', options.backLabel ?? 'Voltar');
-    back.appendChild(createIcon('back' satisfies IconName));
+    back.appendChild(renderIcon('chevron-left'));
     header.appendChild(back);
   }
 

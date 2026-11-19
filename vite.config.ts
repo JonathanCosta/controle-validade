@@ -27,7 +27,6 @@ export default defineConfig({
         start_url: '.',
         scope: '.',
         display: 'standalone',
-        orientation: 'portrait',
         theme_color: '#F7F7F6',
         background_color: '#F7F7F6',
         icons: [
@@ -35,11 +34,13 @@ export default defineConfig({
             src: 'icons/icon-192.png',
             sizes: '192x192',
             type: 'image/png',
+            purpose: 'any',
           },
           {
             src: 'icons/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
+            purpose: 'any',
           },
           {
             src: 'icons/icon-maskable-512.png',
@@ -51,6 +52,17 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        // Os ícones do Manifest são adicionados automaticamente pelo plugin;
+        // ignora-os no glob para não duplicar entradas no precache.
+        globIgnores: [
+          'icons/icon-192.png',
+          'icons/icon-512.png',
+          'icons/icon-maskable-512.png',
+          // Fontes SVG dos ícones PWA: ficam disponíveis em dist/ como
+          // referência, mas não são usadas em runtime.
+          'icons/icon-512.svg',
+          'icons/icon-maskable-512.svg',
+        ],
         navigateFallback: 'index.html',
       },
       devOptions: {
