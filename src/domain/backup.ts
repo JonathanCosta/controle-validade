@@ -12,6 +12,14 @@ export const BACKUP_SCHEMA = 'controle-validade-backup';
 export const BACKUP_VERSION = 1;
 export const APP_VERSION = '1.0.0';
 
+/**
+ * Limite total do arquivo de backup (25 MB). O limite por produto já existe;
+ * este protege a memória do dispositivo contra arquivos arbitrariamente grandes
+ * antes do parse (AGENTS.md §9). Um backup com o máximo de 50.000 produtos
+ * permanece abaixo deste teto.
+ */
+export const MAX_BACKUP_FILE_BYTES = 25 * 1024 * 1024;
+
 export interface BackupFileV1 {
   schema: typeof BACKUP_SCHEMA;
   version: typeof BACKUP_VERSION;
@@ -113,6 +121,9 @@ function validateSettingsRecord(value: unknown): AppSettings | null {
 }
 
 export function parseBackupJson(text: string): BackupValidation {
+  if (text.length > MAX_BACKUP_FILE_BYTES) {
+    return { ok: false, message: 'Arquivo de backup inválido: tamanho acima do limite.' };
+  }
   let parsed: unknown;
   try {
     parsed = JSON.parse(text);

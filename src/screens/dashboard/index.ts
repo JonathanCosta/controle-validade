@@ -150,9 +150,13 @@ function renderIndicators(counts: StatusCounts): HTMLElement {
     root.appendChild(button);
   }
 
+  // §8.2 exige a contagem dos quatro status. Os três indicadores compactos
+  // seguem DESIGN_SYSTEM §7.2; "dentro da validade" aparece no resumo textual.
   const total = document.createElement('p');
   total.className = 'indicators__total';
-  total.textContent = `${counts.total} ${counts.total === 1 ? 'registro' : 'registros'} no total`;
+  const totalLabel = `${counts.total} ${counts.total === 1 ? 'registro' : 'registros'} no total`;
+  const validLabel = `${counts.valid} dentro da validade`;
+  total.textContent = `${totalLabel} · ${validLabel}`;
   root.appendChild(total);
 
   return root;

@@ -9,6 +9,7 @@ import { confirmModal } from '../../components/modal.ts';
 import { showToast } from '../../components/toast.ts';
 import { getAppContext } from '../../app/context.ts';
 import { getLocalToday } from '../../domain/date.ts';
+import { MAX_BACKUP_FILE_BYTES } from '../../domain/backup.ts';
 import {
   isGroupingMode,
   isValidNearExpiryDays,
@@ -127,14 +128,21 @@ function mountSettings(content: HTMLElement, initial: AppSettings): void {
   groupingHint.textContent = 'Escolha como os produtos são agrupados na tela Produtos.';
   const groupingRow = document.createElement('div');
   groupingRow.className = 'grouping-toggle';
+  groupingRow.setAttribute('role', 'group');
+  groupingRow.setAttribute('aria-label', 'Agrupamento padrão');
   const byDate = createButton('Por data', 'secondary');
   const byName = createButton('Por produto', 'secondary');
+  // A classe do toggle fornece o estado visual ativo (layout.css).
+  byDate.classList.add('grouping-toggle__option');
+  byName.classList.add('grouping-toggle__option');
   groupingRow.append(byDate, byName);
 
   function updateGroupingButtons(): void {
     const isDate = settings.groupingMode === 'date';
     byDate.classList.toggle('is-active', isDate);
     byName.classList.toggle('is-active', !isDate);
+    byDate.setAttribute('aria-pressed', String(isDate));
+    byName.setAttribute('aria-pressed', String(!isDate));
   }
   updateGroupingButtons();
 
@@ -195,6 +203,10 @@ function mountSettings(content: HTMLElement, initial: AppSettings): void {
 
   async function handleImportFile(file: File | null): Promise<void> {
     if (!file) {
+      return;
+    }
+    if (file.size > MAX_BACKUP_FILE_BYTES) {
+      showToast('Arquivo de backup muito grande. O limite é de 25 MB.', 'error');
       return;
     }
     let text: string;

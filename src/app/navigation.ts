@@ -31,6 +31,16 @@ export function routeToHash(route: RouteId): string {
   return `#/${route}`;
 }
 
+/**
+ * Verifica se um hash aponta para uma rota conhecida.
+ * A query string é ignorada: `#/produtos?status=expired` é uma rota válida
+ * (usada pelos indicadores da visão geral para abrir a lista já filtrada).
+ */
+export function isKnownRouteHash(hash: string): boolean {
+  const path = hash.split('?')[0] ?? '';
+  return ROUTES.some((route) => routeToHash(route) === path);
+}
+
 /** Substitui o hash do navegador (dispara hashchange se diferente). */
 export function navigate(route: RouteId): void {
   const target = routeToHash(route);

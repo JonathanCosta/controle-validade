@@ -82,6 +82,15 @@
   height: 24px;
 }
 
+/* Em telas muito estreitas (320px), "Configurações" não cabe em 11px
+   ao lado do FAB; reduz 1px para evitar corte do rótulo. */
+@media (max-width: 340px) {
+  .bottom-nav__link {
+    font-size: calc(var(--font-xs) - 1px);
+    letter-spacing: -0.02em;
+  }
+}
+
 /* Botão central `+` */
 .bottom-nav__fab {
   display: flex;
@@ -222,7 +231,8 @@
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text-main);
-  font-size: var(--font-base);
+  /* 16px evita o zoom automático de campos no Safari iOS. */
+  font-size: var(--font-md);
   transition: border-color var(--motion-fast) ease-out;
 }
 
@@ -592,7 +602,8 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
-  font-size: var(--font-base);
+  /* 16px evita o zoom automático de campos no Safari iOS. */
+  font-size: var(--font-md);
 }
 
 .chip-row {
@@ -766,7 +777,8 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   font: inherit;
-  font-size: var(--font-sm);
+  /* 16px evita o zoom automático de campos no Safari iOS. */
+  font-size: var(--font-md);
 }
 
 .modal__actions--stack {

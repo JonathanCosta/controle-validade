@@ -137,6 +137,24 @@ describe('AmericanasLookupProvider — falhas (§7.6)', () => {
     vi.advanceTimersByTime(8000);
     expect(expectFailed(await promise)).toBe('network-error');
   });
+
+  it('timeout também cobre a leitura do corpo da resposta', async () => {
+    const provider = providerWith(
+      (_url, init) =>
+        Promise.resolve({
+          status: 200,
+          ok: true,
+          json: () =>
+            new Promise<never>((_resolve, reject) => {
+              init?.signal?.addEventListener('abort', () => {
+                reject(new DOMException('Aborted', 'AbortError'));
+              });
+            }),
+        } as unknown as Response),
+      30,
+    );
+    expect(expectFailed(await provider.lookupWithStatus(EAN))).toBe('network-error');
+  });
 });
 
 describe('mapResponse', () => {

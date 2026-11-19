@@ -12,7 +12,7 @@ import '../styles/components.css';
 
 import { appState } from './state.ts';
 import { initServices } from './context.ts';
-import { parseRoute, routeToHash, ROUTES } from './navigation.ts';
+import { isKnownRouteHash, parseRoute, routeToHash } from './navigation.ts';
 import { createAppShell } from '../components/app-shell.ts';
 import { renderDashboard } from '../screens/dashboard/index.ts';
 import { renderProducts } from '../screens/products/index.ts';
@@ -28,8 +28,6 @@ const SCREENS: Record<RouteId, (content: HTMLElement) => void> = {
   relatorios: renderReports,
   configuracoes: renderSettings,
 };
-
-const ROUTE_HASHES = new Set(ROUTES.map(routeToHash));
 
 const container = document.querySelector<HTMLDivElement>('#app');
 if (!container) {
@@ -79,7 +77,8 @@ async function bootstrap(root: HTMLElement): Promise<void> {
 
   function applyRoute(): void {
     // Hash desconhecido: volta para #/inicio sem poluir o histórico (§3.5).
-    if (window.location.hash && !ROUTE_HASHES.has(window.location.hash)) {
+    // A query string é ignorada para aceitar #/produtos?status=... (§8.2).
+    if (window.location.hash && !isKnownRouteHash(window.location.hash)) {
       window.location.replace(routeToHash('inicio'));
       return;
     }

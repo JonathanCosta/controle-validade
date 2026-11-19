@@ -61,7 +61,6 @@ export class AmericanasLookupProvider implements ProductLookupProvider {
         signal: controller.signal,
         referrerPolicy: 'no-referrer',
       });
-      clearTimeout(timer);
 
       if (response.status === 404) {
         return failed('not-found');
@@ -77,15 +76,22 @@ export class AmericanasLookupProvider implements ProductLookupProvider {
       try {
         data = (await response.json()) as LookupResponse;
       } catch {
+        // O timeout cobre também a leitura do corpo: se o abort ocorreu
+        // durante o parse, trate como falha de rede, não como JSON inválido.
+        if (controller.signal.aborted) {
+          return failed('network-error');
+        }
         // JSON inválido: descartar resposta e permitir digitação (§7.6).
         return failed('source-error');
       }
       return mapResponse(data, ean);
     } catch {
-      clearTimeout(timer);
       // AbortError do timeout e falhas de rede/CORS compartilham o mesmo
       // tratamento: cadastro manual permanece disponível.
       return failed('network-error');
+    } finally {
+      // O limite de 8s vale para a requisição inteira, incluindo o corpo (§7.4).
+      clearTimeout(timer);
     }
 
     function failed(kind: LookupFailureKind): { status: 'failed'; kind: LookupFailureKind; message: string } {
