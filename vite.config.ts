@@ -18,7 +18,9 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'prompt',
-      includeAssets: ['icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'],
+      // Os ícones e favicons estão em public/ e entram no precache pelo
+      // globPatterns abaixo; evita entradas duplicadas no Workbox.
+      includeAssets: [],
       manifest: {
         name: 'Controle de Validade',
         short_name: 'Validades',
